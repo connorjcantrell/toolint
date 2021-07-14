@@ -23,6 +23,12 @@ type ToolEntry struct {
 	Condition string    `db:"condition"`
 }
 
+type Store interface {
+	UserStore
+	ToolStore
+	ToolEntryStore
+}
+
 type UserStore interface {
 	User(id uuid.UUID) (User, error)
 	UserByUsername(username string) (User, error)
@@ -46,10 +52,4 @@ type ToolEntryStore interface {
 	CreateToolEntry(t *ToolEntry) error
 	UpdateToolEntry(t *ToolEntry) error
 	DeleteToolEntry(id uuid.UUID) error
-}
-
-type Store interface {
-	UserStore
-	ToolStore
-	ToolEntryStore
 }
