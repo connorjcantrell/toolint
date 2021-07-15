@@ -12,7 +12,7 @@ type Tool struct {
 	ID       uuid.UUID `db:"id"`
 	Name     string    `db:"name"`
 	Model    string    `db:"model"`
-	Price    int64     `db:"price"`
+	Make     string    `db:"make"`
 	Category string    `db:"category"`
 }
 
