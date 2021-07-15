@@ -48,6 +48,36 @@ func (h *ToolHandler) Create() http.HandlerFunc {
 	}
 }
 
+func (h *ToolHandler) Store() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		form := CreateToolForm{
+			Name:     r.FormValue("name"),
+			Model:    r.FormValue("model"),
+			Category: r.FormValue("category"),
+		}
+		if !form.Validate() {
+			h.sessions.Put(r.Context(), "form", form)
+			http.Redirect(w, r, r.Referer(), http.StatusFound)
+			return
+		}
+
+		t := &toolint.Tool{
+			ID:       uuid.New(),
+			Name:     form.Name,
+			Model:    form.Model,
+			Category: form.Category,
+		}
+		if err := h.store.CreateTool(t); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		h.sessions.Put(r.Context(), "flash", "Tool has been created.")
+
+		http.Redirect(w, r, "/tools/", http.StatusFound)
+	}
+}
+
 func (h *ToolHandler) Show() http.HandlerFunc {
 	type data struct {
 		SessionData
@@ -57,7 +87,7 @@ func (h *ToolHandler) Show() http.HandlerFunc {
 
 	tmpl := template.Must(template.ParseFiles("templates/layout.html", "templates/tool.html"))
 	return func(w http.ResponseWriter, r *http.Request) {
-		toolIDStr := chi.URLParam(r, "toolID")
+		toolIDStr := chi.URLParam(r, "ID")
 
 		toolID, err := uuid.Parse(toolIDStr)
 		if err != nil {
@@ -75,6 +105,27 @@ func (h *ToolHandler) Show() http.HandlerFunc {
 			SessionData: GetSessionData(h.sessions, r.Context()),
 			CSRF:        csrf.TemplateField(r),
 			Tool:        t,
+		})
+	}
+}
+
+func (h *ToolHandler) List() http.HandlerFunc {
+	type data struct {
+		SessionData
+		Tools []toolint.Tool
+	}
+
+	tmpl := template.Must(template.ParseFiles("templates/layout.html", "templates/tools.html"))
+	return func(w http.ResponseWriter, r *http.Request) {
+		tt, err := h.store.Tools()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		tmpl.Execute(w, data{
+			SessionData: GetSessionData(h.sessions, r.Context()),
+			Tools:       tt,
 		})
 	}
 }
