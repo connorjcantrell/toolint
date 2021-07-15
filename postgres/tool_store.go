@@ -52,7 +52,7 @@ func (s *ToolStore) CreateTool(t *toolint.Tool) error {
 		t.ID,
 		t.Name,
 		t.Model,
-		t.Price,
+		t.Make,
 		t.Category); err != nil {
 		return fmt.Errorf("error creating tool: %w", err)
 	}
@@ -60,10 +60,10 @@ func (s *ToolStore) CreateTool(t *toolint.Tool) error {
 }
 
 func (s *ToolStore) UpdateTool(t *toolint.Tool) error {
-	if err := s.Get(t, `UPDATE tools SET name = $1, model = $2, price = $3, category_id = $4 WHERE id = $5 RETURNING *`,
+	if err := s.Get(t, `UPDATE tools SET name = $1, model = $2, make = $3, category_id = $4 WHERE id = $5 RETURNING *`,
 		t.Name,
 		t.Model,
-		t.Price,
+		t.Make,
 		t.Category,
 		t.ID); err != nil {
 		return fmt.Errorf("error updating tool: %w", err)
