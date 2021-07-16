@@ -21,7 +21,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	csrfKey := []byte(os.Getenv("CSRF_KEY"))
+	key := os.Getenv("CSRF_KEY")
+	csrfKey := []byte(key)
 	h := web.NewHandler(store, sessions, csrfKey)
 	http.ListenAndServe(":3000", h)
 }
