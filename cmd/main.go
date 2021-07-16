@@ -3,15 +3,14 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/connorjcantrell/toolint/postgres"
 	"github.com/connorjcantrell/toolint/web"
 )
 
 func main() {
-	// dsn := os.Getenv("URL_DB")
-	dsn := "postgres://root:secret@localhost/toolint?sslmode=disable"
-
+	dsn := os.Getenv("TOOLINT_DB")
 	store, err := postgres.NewStore(dsn)
 	if err != nil {
 		log.Fatal(err)
@@ -22,7 +21,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	csrfKey := []byte("01234567890123456789012345678901")
+	csrfKey := []byte(os.Getenv("CSRF_KEY"))
 	h := web.NewHandler(store, sessions, csrfKey)
 	http.ListenAndServe(":3000", h)
 }
