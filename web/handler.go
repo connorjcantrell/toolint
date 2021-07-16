@@ -56,9 +56,14 @@ func (h *Handler) Home() http.HandlerFunc {
 
 		ToolEntries []toolint.ToolEntry
 	}
-
 	tmpl := template.Must(template.ParseFiles("templates/layout.html", "templates/home.html"))
 	return func(w http.ResponseWriter, r *http.Request) {
+		sessionData := GetSessionData(h.sessions, r.Context())
+
+		if !sessionData.LoggedIn {
+			http.Redirect(w, r, "/login", http.StatusFound)
+			return
+		}
 		tt, err := h.store.ToolEntries()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -66,7 +71,7 @@ func (h *Handler) Home() http.HandlerFunc {
 		}
 
 		tmpl.Execute(w, data{
-			SessionData: GetSessionData(h.sessions, r.Context()),
+			SessionData: sessionData,
 			ToolEntries: tt,
 		})
 	}
