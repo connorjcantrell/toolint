@@ -7,9 +7,9 @@
     {{.CSRF}}
     <div class="form-group">
         <label></label>
-        <input name="title" type="text" class="form-control {{with .Form.Errors.Title}}is-invalid{{end}}"
-            placeholder="Give your post a great title" value="{{with .Form.Title}}{{.}}{{end}}">
-        {{with .Form.Errors.Title}}
+        <input name="tool" type="" class="form-control {{with .Form.Errors.Tool}}is-invalid{{end}}"
+            placeholder="Select a Tool" value="{{with .Form.Tool}}{{.}}{{end}}">
+        {{with .Form.Errors.Tool}}
         <div class="invalid-feedback">{{.}}</div>
         {{end}}
     </div>
