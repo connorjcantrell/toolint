@@ -102,7 +102,7 @@ func (h *UserHandler) LoginSubmit() http.HandlerFunc {
 			return
 		}
 
-		// TODO:
+		// TODO: Security Vulerability?
 		// Is this a security vulerability to expose the user_id in the Request
 		// Context? Perhaps we could provide a hash of the user_id instead?
 		h.sessions.Put(r.Context(), "user_id", user.ID)
