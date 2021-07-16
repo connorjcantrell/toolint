@@ -39,7 +39,7 @@ type UserStore interface {
 type ToolStore interface {
 	Tool(id uuid.UUID) (Tool, error)
 	Tools() ([]Tool, error)
-	ToolsByCategory(threadID uuid.UUID) ([]Tool, error)
+	ToolsByCategory(category string) ([]Tool, error)
 	CreateTool(t *Tool) error
 	UpdateTool(t *Tool) error
 	DeleteTool(id uuid.UUID) error
@@ -48,7 +48,7 @@ type ToolStore interface {
 type ToolEntryStore interface {
 	ToolEntry(id uuid.UUID) (ToolEntry, error)
 	ToolEntries() ([]ToolEntry, error)
-	ToolsByUser(userID uuid.UUID) ([]ToolEntry, error)
+	ToolEntriesByUser(userID uuid.UUID) ([]ToolEntry, error)
 	CreateToolEntry(t *ToolEntry) error
 	UpdateToolEntry(t *ToolEntry) error
 	DeleteToolEntry(id uuid.UUID) error
