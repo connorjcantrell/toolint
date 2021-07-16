@@ -26,8 +26,7 @@ func (s *ToolEntryStore) ToolEntriesByUser(userID uuid.UUID) ([]toolint.ToolEntr
 		SELECT
 		FROM tool_entries
 		WHERE user_id = $1
-		GROUP BY tool_entries.id
-		ORDER BY votes DESC`
+		GROUP BY tool_entries.id`
 	if err := s.Select(&tt, query, userID); err != nil {
 		return []toolint.ToolEntry{}, fmt.Errorf("error getting tool_entries: %w", err)
 	}
@@ -39,8 +38,7 @@ func (s *ToolEntryStore) ToolEntries() ([]toolint.ToolEntry, error) {
 	var query = `
 		SELECT
 		FROM tool_entries
-		GROUP BY tool_entries.id,
-		ORDER BY name DESC`
+		GROUP BY tool_entries.id`
 	if err := s.Select(&tt, query); err != nil {
 		return []toolint.ToolEntry{}, fmt.Errorf("error getting tool_entries: %w", err)
 	}
