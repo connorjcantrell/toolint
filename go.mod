@@ -3,7 +3,7 @@ module github.com/connorjcantrell/toolint
 go 1.16
 
 require (
-	github.com/alexedwards/scs/postgresstore v0.0.0-20210606090158-85ec2fab6bdf // indirect
+	github.com/alexedwards/scs/postgresstore v0.0.0-20210606090158-85ec2fab6bdf
 	github.com/alexedwards/scs/v2 v2.4.0
 	github.com/go-chi/chi v1.5.4
 	github.com/google/uuid v1.3.0
