@@ -1,4 +1,4 @@
-package goreddit
+package toolint
 
 import "github.com/google/uuid"
 
@@ -36,6 +36,7 @@ type UserStore interface {
 	UpdateUser(u *User) error
 	DeleteUser(id uuid.UUID) error
 }
+
 type ToolStore interface {
 	Tool(id uuid.UUID) (Tool, error)
 	Tools() ([]Tool, error)

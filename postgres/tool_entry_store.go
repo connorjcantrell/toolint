@@ -3,7 +3,7 @@ package postgres
 import (
 	"fmt"
 
-	toolint "github.com/connorjcantrell/toolint"
+	"github.com/connorjcantrell/toolint"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 )

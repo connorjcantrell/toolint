@@ -7,7 +7,7 @@ import (
 
 	"github.com/alexedwards/scs/postgresstore"
 	"github.com/alexedwards/scs/v2"
-	toolint "github.com/connorjcantrell/toolint"
+	"github.com/connorjcantrell/toolint"
 	"github.com/google/uuid"
 )
 

@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/alexedwards/scs/v2"
-	toolint "github.com/connorjcantrell/toolint"
+	"github.com/connorjcantrell/toolint"
 	"github.com/go-chi/chi"
 	"github.com/google/uuid"
 	"github.com/gorilla/csrf"

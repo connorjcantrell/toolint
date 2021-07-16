@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/alexedwards/scs/v2"
-	toolint "github.com/connorjcantrell/toolint"
+	"github.com/connorjcantrell/toolint"
 	"github.com/go-chi/chi"
 	"github.com/google/uuid"
 	"github.com/gorilla/csrf"
@@ -62,14 +62,9 @@ func (h *ToolEntryHandler) Store() http.HandlerFunc {
 		}
 		if !form.Validate() {
 			h.sessions.Put(r.Context(), "form", form)
+			w.Header().Set("Cache-Control", "private")
 			http.Redirect(w, r, r.Referer(), http.StatusFound)
 			return
-			// TODO: Change Cache-Control to private
-
-			// "also worth noting that browsers are allowed to cache 302 redirects
-			// without making the intermediate call again, so you might want to
-			// be sure you're setting Cache-Control: private, no-cache on these
-			// responses" - @lazyreader
 		}
 
 		data := GetSessionData(h.sessions, r.Context())
