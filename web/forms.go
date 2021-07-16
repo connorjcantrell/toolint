@@ -23,23 +23,9 @@ type CreatePostForm struct {
 	Errors FormErrors
 }
 
-func (f *CreatePostForm) Validate() bool {
-	f.Errors = FormErrors{}
-
-	if f.Title == "" {
-		f.Errors["Title"] = "Please enter a title."
-	}
-	if f.Content == "" {
-		f.Errors["Content"] = "Please enter a text."
-	}
-
-	return len(f.Errors) == 0
-}
-
 type CreateToolForm struct {
 	Name     string
 	Model    string
-	Price    int64
 	Category string
 
 	Errors FormErrors
@@ -52,15 +38,10 @@ func (f *CreateToolForm) Validate() bool {
 		f.Errors["Name"] = "Please enter a name."
 	}
 
-	if f.Price == 0 {
-		f.Errors["Price"] = "Please enter a price."
-	}
-
 	return len(f.Errors) == 0
 }
 
 type CreateToolEntryForm struct {
-	UserID    uuid.UUID
 	ToolID    uuid.UUID
 	Condition string
 
@@ -70,12 +51,7 @@ type CreateToolEntryForm struct {
 func (f *CreateToolEntryForm) Validate() bool {
 	f.Errors = FormErrors{}
 
-	_, err := uuid.Parse(string(f.UserID.String()))
-	if err != nil {
-		f.Errors["UserID"] = "Invalid user"
-	}
-
-	_, err = uuid.Parse(string(f.ToolID.String()))
+	_, err := uuid.Parse(string(f.ToolID.String()))
 	if err != nil {
 		f.Errors["ToolID"] = "Please select a tool"
 	}
