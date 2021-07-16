@@ -64,15 +64,20 @@ func (h *ToolEntryHandler) Store() http.HandlerFunc {
 			h.sessions.Put(r.Context(), "form", form)
 			http.Redirect(w, r, r.Referer(), http.StatusFound)
 			return
+			// TODO: Change Cache-Control to private
+
 			// "also worth noting that browsers are allowed to cache 302 redirects
 			// without making the intermediate call again, so you might want to
 			// be sure you're setting Cache-Control: private, no-cache on these
 			// responses" - @lazyreader
 		}
 
+		data := GetSessionData(h.sessions, r.Context())
+
 		t := &toolint.ToolEntry{
 			ID:        uuid.New(),
 			ToolID:    form.ToolID,
+			UserID:    data.User.ID,
 			Condition: form.Condition,
 		}
 		if err := h.store.CreateToolEntry(t); err != nil {
