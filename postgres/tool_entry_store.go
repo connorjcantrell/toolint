@@ -20,7 +20,7 @@ func (s *ToolEntryStore) ToolEntry(id uuid.UUID) (toolint.ToolEntry, error) {
 	return p, nil
 }
 
-func (s *ToolEntryStore) ToolEntryByUser(category string) ([]toolint.ToolEntry, error) {
+func (s *ToolEntryStore) ToolEntriesByUser(userID uuid.UUID) ([]toolint.ToolEntry, error) {
 	var tt []toolint.ToolEntry
 	var query = `
 		SELECT
@@ -28,7 +28,7 @@ func (s *ToolEntryStore) ToolEntryByUser(category string) ([]toolint.ToolEntry, 
 		WHERE user_id = $1
 		GROUP BY tool_entries.id
 		ORDER BY votes DESC`
-	if err := s.Select(&tt, query, category); err != nil {
+	if err := s.Select(&tt, query, userID); err != nil {
 		return []toolint.ToolEntry{}, fmt.Errorf("error getting tool_entries: %w", err)
 	}
 	return tt, nil
