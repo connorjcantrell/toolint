@@ -87,8 +87,6 @@ func (h *Handler) withUser(next http.Handler) http.Handler {
 			return
 		}
 
-		// TODO: Possible type collision
-		// Define my own type (instead of user) to avoid collisions
 		ctx := context.WithValue(r.Context(), "user", user)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
