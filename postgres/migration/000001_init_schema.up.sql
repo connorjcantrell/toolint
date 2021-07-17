@@ -1,6 +1,6 @@
 CREATE TABLE "users" (
   "id" uuid PRIMARY KEY,
-  "name" varchar NOT NULL,
+  "username" varchar NOT NULL,
   "password" varchar NOT NULL
 );
 
@@ -18,6 +18,14 @@ CREATE TABLE "tool_entries" (
   "tool_id" uuid NOT NULL,
   "condition" int NOT NULL DEFAULT 0
 );
+
+CREATE TABLE sessions (
+	token TEXT PRIMARY KEY,
+	data BYTEA NOT NULL,
+	expiry TIMESTAMPTZ NOT NULL
+);
+
+CREATE INDEX sessions_expiry_idx ON sessions (expiry);
 
 ALTER TABLE "tool_entries" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
