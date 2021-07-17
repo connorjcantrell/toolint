@@ -26,8 +26,7 @@ func (s *ToolStore) ToolsByCategory(category string) ([]toolint.Tool, error) {
 		SELECT
 		FROM tools
 		WHERE category_id = $1
-		GROUP BY tools.id
-		ORDER BY votes DESC`
+		GROUP BY tools.id`
 	if err := s.Select(&tt, query, category); err != nil {
 		return []toolint.Tool{}, fmt.Errorf("error getting tools: %w", err)
 	}
