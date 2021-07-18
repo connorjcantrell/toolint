@@ -47,28 +47,30 @@ func (s *ToolStore) Tools() ([]toolint.Tool, error) {
 	return tt, nil
 }
 
-func (s *ToolStore) CreateTool(t *toolint.Tool) error {
-	if err := s.Get(t, `INSERT INTO tools VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+func (s *ToolStore) CreateTool(t toolint.Tool) (toolint.Tool, error) {
+	var ret toolint.Tool
+	if err := s.Get(&ret, `INSERT INTO tools VALUES ($1, $2, $3, $4, $5) RETURNING *`,
 		t.ID,
 		t.Name,
 		t.Model,
 		t.Make,
 		t.Category); err != nil {
-		return fmt.Errorf("error creating tool: %w", err)
+		return toolint.Tool{}, fmt.Errorf("error creating tool: %w", err)
 	}
-	return nil
+	return ret, nil
 }
 
-func (s *ToolStore) UpdateTool(t *toolint.Tool) error {
-	if err := s.Get(t, `UPDATE tools SET name = $1, model = $2, make = $3, category_id = $4 WHERE id = $5 RETURNING *`,
+func (s *ToolStore) UpdateTool(t toolint.Tool) (toolint.Tool, error) {
+	var ret toolint.Tool
+	if err := s.Get(&ret, `UPDATE tools SET name = $1, model = $2, make = $3, category = $4 WHERE id = $5 RETURNING *`,
 		t.Name,
 		t.Model,
 		t.Make,
 		t.Category,
 		t.ID); err != nil {
-		return fmt.Errorf("error updating tool: %w", err)
+		return toolint.Tool{}, fmt.Errorf("error updating tool: %w", err)
 	}
-	return nil
+	return ret, nil
 }
 
 func (s *ToolStore) DeleteTool(id uuid.UUID) error {

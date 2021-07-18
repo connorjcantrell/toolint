@@ -61,13 +61,13 @@ func (h *ToolHandler) Store() http.HandlerFunc {
 			return
 		}
 
-		t := &toolint.Tool{
+		t := toolint.Tool{
 			ID:       uuid.New(),
 			Name:     form.Name,
 			Model:    form.Model,
 			Category: form.Category,
 		}
-		if err := h.store.CreateTool(t); err != nil {
+		if _, err := h.store.CreateTool(t); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}

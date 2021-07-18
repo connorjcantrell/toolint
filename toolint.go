@@ -1,4 +1,4 @@
-package goreddit
+package toolint
 
 import "github.com/google/uuid"
 
@@ -40,8 +40,8 @@ type ToolStore interface {
 	Tool(id uuid.UUID) (Tool, error)
 	Tools() ([]Tool, error)
 	ToolsByCategory(category string) ([]Tool, error)
-	CreateTool(t *Tool) error
-	UpdateTool(t *Tool) error
+	CreateTool(t Tool) (Tool, error)
+	UpdateTool(t Tool) (Tool, error)
 	DeleteTool(id uuid.UUID) error
 }
 
