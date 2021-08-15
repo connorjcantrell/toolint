@@ -1,12 +1,19 @@
 # Toolint
 
-This repository is a simple web appliation that allows users to manage tool inventory. The purpose of this application is to explore using the Go programming language.
+Tool inventory management for individuals and organizations within the construction industry
 
-Skills covered:
+### Considerations:
+The first version of this project is intended to have simple domain logic. This will allow attention to directed towards the core concepts of the Go programming language and design patterns.
+Key conspepts include:
+- Building a PostgreSQL database with Docker
+- Running migrations using the `golang-cli` tool
+- Getting familiar with Go's `html/template` package
+- Model/ View/ Controller design patterns
 
-- PostgreSQL database with Docker
-- Running migrations using the golang-cli tool
-- HTML Templates
-- Model/ View/ Controller design pattern
+### Future development
+New features will be added following versions, which will begin to offer real business usecases, including:
 
-This project is still a work in progress...
+- Integrate and view all supply channels
+- Approve tool requests made by an employee
+- Monitoring possession of tools throughout an organization
+- Automated insurance claims for stolen tools
